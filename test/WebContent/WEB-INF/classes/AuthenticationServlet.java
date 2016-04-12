@@ -61,7 +61,7 @@ public class AuthenticationServlet extends HttpServlet {
 					//Cookie userIdCookie = new Cookie("userID", user);
 					//userIdCookie.setPath("/");
 					//response.addCookie(userIdCookie);
-					response.sendRedirect("http://localhost:8080/test/Forecasting.jsp");
+					response.sendRedirect("http://localhost:8080/test/LoadDept");
 
 					
 				}	

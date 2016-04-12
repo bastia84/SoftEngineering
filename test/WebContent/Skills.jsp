@@ -31,28 +31,44 @@
 <td style="float:center; padding-left:265px"><button id ="b2" class="button" onclick="window.location.href = 'http://localhost:8080/test/Productivity.jsp'">Productivity</button></td> 
 <td style="float:right"><button id="b3" class="button" onclick="window.location.href = 'http://localhost:8080/test/Forecasting.jsp'">Forecasting </button></tr>
 </table>
+<form name="d" action="LoadEmployee">
 <table class="tg"  id="dropdown" style= "margin-left:2%; margin-top: 5%">
-  <tr>
-    <th >Department: <select>
-    <option value="All">All</option>
  
-  <%String[] Dept1 = null;
-  Dept1 = (String[]) request.getAttribute("Departments");
+  <tr>
+    <th >Department: 
+    <select name="Department" onchange="javascript:document.d.submit()">
+    
+ 
+  <%
+  String[] Dept1 = (String[]) request.getAttribute("Departments");
+  if(Dept1 != null) {
   System.out.println(Dept1.length);
   for(int i = 0; i < Dept1.length; i++){
   %>
 
  <option><%= Dept1[i] %></option>
-<%} %>
+<%} }%>
+<option value="All">All</option>
+<option value="" selected="selected"></option>
 </select></th>
   </tr>
 
+</table>
+</form>
+<table class="tg"  id="dropdown" style= "margin-left:2%; margin-top: 5%">
   <tr>
     <td style="padding-left:2px">Employee: <select>
-  <option value="volvo">All</option>
-  <option value="saab">Emp 1</option>
-  <option value="opel">Emp 2</option>
-  <option value="audi">Emp 3</option>
+  
+  <%
+  String[] Emp1 = (String[]) request.getAttribute("Employees");
+  if(Emp1 != null) {
+  System.out.println(Emp1.length);
+  for(int i = 0; i < Emp1.length; i++){
+  %>
+
+ <option><%= Emp1[i] %></option>
+<%} }%>
+<option value="All">All</option>
 </select></td>
   </tr>
 </table>
