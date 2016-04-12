@@ -58,9 +58,9 @@ public class AuthenticationServlet extends HttpServlet {
 				String user = RESULT.getString("UName");
 				if (user.equals(request.getParameter("Username"))){
 					//messages = "<script>alert('Welcome " + user + "')</script>";
-					Cookie userIdCookie = new Cookie("userID", user);
+					//Cookie userIdCookie = new Cookie("userID", user);
 					//userIdCookie.setPath("/");
-					response.addCookie(userIdCookie);
+					//response.addCookie(userIdCookie);
 					response.sendRedirect("http://localhost:8080/test/Forecasting.jsp");
 
 					

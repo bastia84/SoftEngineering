@@ -15,18 +15,31 @@
   -o-background-size: cover;
   background-size: cover; ">
   
-<%
+<%-- <%
 Cookie[] cookies = request.getCookies();
 
 if(cookies != null){	
 	int j = 0;
+
+  for(int i=0 ;i<cookies.length;i++ ){
+    Cookie cookie = cookies[i];
+    out.println(" <tr> ");
+    out.println("<td>" + cookie.getName() + "</td>" );
+    out.println("<td>" + cookie.getValue() + "</td>" );
+    out.println("<td>" + cookie.getMaxAge() + "</td>" );
+    out.println(" </tr> ");
+    if (cookie.getValue().equals("Admin")){
+    	System.out.println(cookie.getName());
+    	j++;}
+    
+  }
 	 if (j<1){response.sendRedirect("http://localhost:8080/test/MyJsp.jsp");}
   }
 else {
 	response.sendRedirect("http://localhost:8080/test/MyJsp.jsp");
 }
 
-%>
+%> --%>
 
 
 <div id= "header"> 
@@ -34,9 +47,9 @@ else {
 </div>
 
 <table id= "table1" style="width:100%">
-<tr><td><button  id ="b1" class="button" onclick="window.location.href = 'file:///C:/Users/Brian/workspace1/ManagedSkills/Skills.html'">Skills</button></td> 
-<td style="float:center; padding-left:265px"><button id ="b2" class="button" onclick="window.location.href = 'file:///C:/Users/Brian/workspace1/ManagedSkills/Productivity.html'">Productivity</button></td> 
-<td style="float:right"><button id="b3" class="button" onclick="window.location.href = 'file:///C:/Users/Brian/workspace1/ManagedSkills/Forecasting.html'">Forecasting </button></tr>
+<tr><td><button  id ="b1" class="button" onclick="window.location.href = 'http://localhost:8080/test/Skills.jsp'">Skills</button></td> 
+<td style="float:center; padding-left:265px"><button id ="b2" class="button" onclick="window.location.href = 'http://localhost:8080/test/Productivity.jsp'">Productivity</button></td> 
+<td style="float:right"><button id="b3" class="button" onclick="window.location.href = 'http://localhost:8080/test/Forecasting.jsp'">Forecasting </button></tr>
 </table>
 
 <div id="form2" class="form2" style="margin-left: 2%; margin-top: 0%" >
@@ -60,7 +73,9 @@ End Date:
    })();
  
 </script>
-
+<form action="LogOutServlet">
+<button id=LogOut disabled style="position: absolute;right:2px;bottom:2px;">Log Out</button>
+</form>
 </body>
 
 </html>
