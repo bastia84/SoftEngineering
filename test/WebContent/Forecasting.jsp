@@ -14,30 +14,12 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover; ">
-  <table border=”1”>
-     <tr>
-      <td>Cookie Name </td>
-      <td>Cookie Value </td>
-      <td>Cookie Max Age  </td>
-     </tr>	
+  
 <%
 Cookie[] cookies = request.getCookies();
 
 if(cookies != null){	
 	int j = 0;
-
-  for(int i=0 ;i<cookies.length;i++ ){
-    Cookie cookie = cookies[i];
-    out.println(" <tr> ");
-    out.println("<td>" + cookie.getName() + "</td>" );
-    out.println("<td>" + cookie.getValue() + "</td>" );
-    out.println("<td>" + cookie.getMaxAge() + "</td>" );
-    out.println(" </tr> ");
-    if (cookie.getName().equals("userID")){
-    	System.out.println(cookie.getName());
-    	j++;}
-    
-  }
 	 if (j<1){response.sendRedirect("http://localhost:8080/test/MyJsp.jsp");}
   }
 else {
@@ -45,7 +27,7 @@ else {
 }
 
 %>
-</table>
+
 
 <div id= "header"> 
 <h1><b>ASRC Talent Management: Forecasting</b></h1>
