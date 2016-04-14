@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -11,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import test.dbConn;
 
 /**
- * Servlet implementation class LoadEmployee
+ * Servlet implementation class LoadProdEmployee
  */
-@WebServlet("/LoadEmployee")
-public class LoadEmployee extends HttpServlet {
+@WebServlet("/LoadProdEmployee")
+public class LoadProdEmployee extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static ResultSet RESULT;
 	public ArrayList<String> Employee = new ArrayList<String>();
@@ -23,7 +24,7 @@ public class LoadEmployee extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LoadEmployee() {
+	public LoadProdEmployee() {
 		super();
 	}
 
@@ -33,24 +34,23 @@ public class LoadEmployee extends HttpServlet {
 	 * 
 	 *      Additions to method stub include: Gathering of all employees
 	 *      available from SQL Database based on department selected
-	 * 
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		try {
 			String dept = request.getParameter("Department"); // Get the
-																// department
-																// selected on
-																// webpage
+															  // department
+			              									  // selected on
+															  // webpage
 
-			if (dept.equals("All")) { // If "All" run query and select all names
-										// (without duplicates)
+			if (dept.equals("All")) {// If "All" run query and select all names
+				// (without duplicates)
 				RESULT = new dbConn().start(
 						"SELECT DISTINCT Worker FROM dbo.Productivity ORDER BY Worker");
 			}
 
-			else { // Else run query and select all name within that department
+			else {// Else run query and select all name within that department
 					// (without duplicates)
 				RESULT = new dbConn()
 						.start("SELECT DISTINCT Worker FROM dbo.Productivity WHERE SummaryOrg ='"
@@ -67,7 +67,6 @@ public class LoadEmployee extends HttpServlet {
 															// array
 				RESULT.next();
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,12 +75,12 @@ public class LoadEmployee extends HttpServlet {
 																			// arrayList
 																			// into
 																			// Array
-		
-		request.setAttribute("Employees", Employees); // Set Employee array on
-														// webpage
-		request.getRequestDispatcher("/Skills.jsp").forward(request, response);
 
-		// ADDITIONAL CODE TO REPOPULATE THE DEPARTMENTS WILL NEED TO BE ADDED
+		request.setAttribute("Employees", Employees); // Set Employee array on
+													  // webpage
+		request.getRequestDispatcher("/Productivity.jsp").forward(request,
+				response);
+		;
 	}
 
 	/**
