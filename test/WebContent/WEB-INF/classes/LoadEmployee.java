@@ -19,6 +19,7 @@ public class LoadEmployee extends HttpServlet {
 	private static ResultSet RESULT;
 	public ArrayList<String> Employee = new ArrayList<String>();
 	public ArrayList<String> Depts = new ArrayList<String>();
+	String dept;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -37,12 +38,12 @@ public class LoadEmployee extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		dept = request.getParameter("Department"); // Get the
+													// department
+													// selected on
+													// webpage
 		try {
-			String dept = request.getParameter("Department"); // Get the
-																// department
-																// selected on
-																// webpage
+			
 
 			if (dept.equals("All")) { // If "All" run query and select all names
 										// (without duplicates)
@@ -72,11 +73,16 @@ public class LoadEmployee extends HttpServlet {
 			e.printStackTrace();
 		}
 
+		ArrayList<String> e = new ArrayList<String>();
+		e.add(dept);
+		String[] Departments = e.toArray(new String[e.size()]);
+		request.setAttribute("Departments", Departments);
 		String[] Employees = Employee.toArray(new String[Employee.size()]); // change
 																			// arrayList
 																			// into
 																			// Array
-		
+		String selectedD = dept;
+		request.setAttribute("selectedD", selectedD);
 		request.setAttribute("Employees", Employees); // Set Employee array on
 														// webpage
 		request.getRequestDispatcher("/Skills.jsp").forward(request, response);

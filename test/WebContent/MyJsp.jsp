@@ -19,7 +19,7 @@
 		<tr>
 			<td>
 				<button id="b1" class="button"
-					onclick="window.location.href = 'http://localhost:8080/test/LoadDept'">Skills</button>
+					onclick="window.location.href = 'http://localhost:8080/test/LoadSkillDept'">Skills</button>
 			</td>
 			<!-- Button 1 will redirect to Skills Page -->
 

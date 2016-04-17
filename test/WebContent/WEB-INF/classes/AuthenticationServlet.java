@@ -74,7 +74,7 @@ public class AuthenticationServlet extends HttpServlet {
 																		// same
 																		// redirect
 					response.sendRedirect(
-							"http://localhost:8080/test/LoadDept");
+							"http://localhost:8080/test/LoadSkillDept");
 				}
 			} else { // Else display error message
 				messages = "<script>alert('Invalid Username/Password')</script>";

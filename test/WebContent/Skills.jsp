@@ -9,7 +9,7 @@
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 <meta charset="ISO-8859-1">
-
+<%@ page import="test.Employee"%>
 <title>Software Engineering Project</title>
 </head>
 
@@ -57,51 +57,69 @@
 						onchange="javascript:document.d.submit()">
 							<!-- When a selection is made the Servlet "LoadProdEmployee" 
 						 is called to populate the Employee drop-down -->
-							<option value="All">All</option>
+							
 
 							<!-- This Java code loops through the array of departments and populates the drop-down -->
 							<%
+								int i;
 								String[] Dept1 = (String[]) request.getAttribute("Departments");
 								if (Dept1 != null) {
 									System.out.println(Dept1.length);
-									for (int i = 0; i < Dept1.length; i++) {
+									for (i = 0; i < Dept1.length; i++) {
 							%>
 
 							<option><%=Dept1[i]%></option>
 							<%
+							}
+								if(i > 1){
+									%>
+							<option value="All">All</option>
+							<%	
 								}
 								}
-							%>
+							
+						%>
 					</select></th>
 				</tr>
 			</table>
+			
 		</form>
 
 		<!-- This input field is a drop-down list which is populated from the Servlet "LoadEmployee" when
 		 the Department from the above input field is selected -->
+		<form name="e" action="SubmitSkillSearch">
 		<table class="tg" id="dropdown"
 			style="margin-left: 2%; margin-top: 5%">
 			<tr>
-				<td style="padding-left: 2px">Employee: <select>
-						<option value="All" selected="selected">All</option>
-
+				<td style="padding-left: 2px">Employee: <select name="Employee" onchange="javascript:document.e.submit()">
+					
 						<!-- This Java code loops through the array of employees and populates the drop-down -->
-						<%
+						<%	
+							int k;
 							String[] Emp1 = (String[]) request.getAttribute("Employees");
 							if (Emp1 != null) {
 								System.out.println(Emp1.length);
-								for (int i = 0; i < Emp1.length; i++) {
+								for (k = 0; k < Emp1.length; k++) {
 						%>
 
-						<option><%=Emp1[i]%></option>
+						<option><%=Emp1[k]%></option>
 						<%
 							}
-							}
+								if(k > 1){
+									%>
+							<option value="All">All</option>
+							<%	
+								}
+								}
+							
 						%>
 
 				</select></td>
 			</tr>
 		</table>
+		<%=request.getAttribute("selectedD")%>
+		<input type="hidden" name="selectedD" id="selectedD" value="${selectedD}">
+		</form>
 	</div>
 	
 	<!-- This is the table where the results from query will be displayed
@@ -115,47 +133,64 @@
 				<th class="tg-fefd">Skill 2</th>
 				<th class="tg-fefd">Skill 3</th>
 			</tr>
+			<%
+							int z;
+							Employee[] Worker = (Employee[]) request.getAttribute("TableEmployee");
+							if (Worker != null) {
+								System.out.println(Worker.length);
+								for (z = 0; z < Worker.length; z++) {
+									String [] skills = Worker[z].getSkills();
+									String skill1, skill2, skill3;
+									if (skills.length < 1){
+										continue;
+									}
+									
+									else if (skills.length == 1){
+										skill1 = skills[0];
+										skill2 = "";
+										skill3 = "";
+									}
+									else if (skills.length == 2){
+										skill1 = skills[0];
+										skill2 = skills[1];
+										skill3 = "";
+									}
+									
+									else {
+										skill1 = skills[0];
+										skill2 = skills[1];
+										skill3 = skills[2];
+									}
+									if(z%2 == 0){
+						%>
 			<tr>
-				<td class="tg-6k2t"></td>
-				<td class="tg-6k2t"></td>
-				<td class="tg-6k2t"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-				<td class="tg-6k2t"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-				<td class="tg-6k2t"><input type="checkbox"
-					name="query_myTextEditBox"></td>
+				<td class="tg-6k2t"><%=Worker[z].getName()%></td>
+				<td class="tg-6k2t"><%=Worker[z].getDepartment()%></td>
+				<td class="tg-6k2t"><%=skill1%></td>
+				<td class="tg-6k2t"><%=skill2%></td>
+				<td class="tg-6k2t"><%=skill3%></td>
 			</tr>
+			<%
+							}
+									else {
+										%>
+
 			<tr>
-				<td class="tg-yw4l"></td>
-				<td class="tg-yw4l"></td>
-				<td class="tg-yw4l"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-				<td class="tg-yw4l"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-				<td class="tg-yw4l"><input type="checkbox"
-					name="query_myTextEditBox"></td>
+				<td class="tg-yw4l"><%=Worker[z].getName()%></td>
+				<td class="tg-yw4l"><%=Worker[z].getDepartment()%></td>
+				<td class="tg-yw4l"><%=skill1%></td>
+				<td class="tg-yw4l"><%=skill2%></td>
+				<td class="tg-yw4l"><%=skill3%></td>
 			</tr>
-			<tr>
-				<td class="tg-6k2t"></td>
-				<td class="tg-6k2t"></td>
-				<td class="tg-6k2t"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-				<td class="tg-6k2t"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-				<td class="tg-6k2t"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l"></td>
-				<td class="tg-yw4l"></td>
-				<td class="tg-yw4l"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-				<td class="tg-yw4l"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-				<td class="tg-yw4l"><input type="checkbox"
-					name="query_myTextEditBox"></td>
-			</tr>
+
+			<%	
+								}
+							}
+							}
+						%>
+
 		</table>
+		
 	</div>
 </body>
 </html>

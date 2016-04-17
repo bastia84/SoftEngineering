@@ -68,8 +68,7 @@ public class LoadSkillDept extends HttpServlet {
 
 		request.setAttribute("Departments", Departments); // set Departments
 															// array on webpage
-		request.getRequestDispatcher("/WebContent/WEB-INF/classes/Skills.jsp")
-				.forward(request, response);
+		request.getRequestDispatcher("/Skills.jsp").forward(request, response);
 	}
 
 	/**
