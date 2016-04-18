@@ -38,25 +38,19 @@ public class LoadProdDept extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-
+			
+			Depts.clear(); //clear all arrays
+			
+			//create connection to DB, Run SQL Query and get ResultSet
 			RESULT = new dbConn().start(
-					"SELECT DISTINCT SummaryOrg FROM dbo.Productivity ORDER BY SummaryOrg"); // Run
-																								// Query
-																								// to
-																								// get
-																								// all
-																								// departments
-																								// in
-																								// Database
-			RESULT.next();
-			Depts.clear();
+					"SELECT DISTINCT SummaryOrg FROM dbo.Productivity ORDER BY SummaryOrg"); 
+			
+			RESULT.next(); //go to first result
+			
 
-			while (!RESULT.isAfterLast()) { // while there are still Departments
-											// in ResultSet
+			while (!RESULT.isAfterLast()) { // while there are still Departments in ResultSet
 
-				Depts.add(RESULT.getString("SummaryOrg")); // Add the department
-															// to the Department
-															// array
+				Depts.add(RESULT.getString("SummaryOrg")); // Add the department to the Department array
 				RESULT.next();
 			}
 
@@ -64,15 +58,11 @@ public class LoadProdDept extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		String[] Departments = Depts.toArray(new String[Depts.size()]); // change
-		// arrayList
-		// into
-		// Array
-
-		request.setAttribute("Departments", Departments); // Set Departments
-															// array on webpage
-		request.getRequestDispatcher("Productivity.jsp").forward(request,
-				response);
+		//prepare elements to be sent to JSP page
+		String[] Departments = Depts.toArray(new String[Depts.size()]); 
+		request.setAttribute("Departments", Departments);
+		
+		request.getRequestDispatcher("Productivity.jsp").forward(request,response);
 	}
 
 	/**

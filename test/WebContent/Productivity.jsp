@@ -38,9 +38,10 @@
 
 			<td style="float: right">
 				<button id="b3" class="button"
-					onclick="window.location.href = 'http://localhost:8080/test/Forecasting.jsp'">Forecasting
-				</button> <!-- Button 3 will redirect to Forecasting Page -->
+					onclick="window.location.href = 'http://localhost:8080/test/LoadForecasting'">Forecasting
+				</button>
 			</td>
+			 <!-- Button 3 will redirect to Forecasting Page -->
 		</tr>
 	</table>
 
@@ -68,6 +69,7 @@
 							<option><%=Dept1[k]%></option>
 							<%
 							}
+									//if more than one element is present in Array add an "All" Option
 								if(k > 1){
 									%>
 							<option value="All">All</option>
@@ -84,17 +86,17 @@
 				</tr>
 			</table>
 		</form>
-		<script>
-	function getSelectedDept(){
-		var selected = document.getElementById("Department").value
-		document.getElementById("SelectedDept").value = selected
-	}
-	
+
+	<script>
+		function getSelectedDept() {
+			var selected = document.getElementById("Department").value
+			document.getElementById("SelectedDept").value = selected
+		}
 	</script>
-		<!-- This input field is a drop-down list which is populated from the Servlet "LoadProdEmployee" when
+	
+	<!-- This input field is a drop-down list which is populated from the Servlet "LoadProdEmployee" when
 			 the Department from the above input field is selected -->
 		<form name="e" action="SubmitProdSearch">
-
 			<table
 				style="float: left; width: 250px; height: 20px; margin-left: 2%; margin-top: .5%"
 				class="tg" id="dropdown">
@@ -115,6 +117,7 @@
 							<option selected="selected"><%=Emp1[i]%></option>
 							<%
 							}
+								//if more than one element is present in Array add an "All" Option
 								if(i > 1){
 									%>
 							<option value="All">All</option>
@@ -135,7 +138,7 @@
 				<tr>
 					<th>Charge #: <select id="Charge" name="Charge">
 							<option value="All">All</option>
-							<!-- This Java code loops through the array of employees and populates the drop-down -->
+							<!-- This Java code loops through the array of Charges and populates the drop-down -->
 							<%
 							String[] Cha1 = (String[]) request.getAttribute("Charges");
 							if (Cha1 != null) {
@@ -228,15 +231,13 @@
 	<script>
 	function redirect(){
 		document.location.href="/LoadProdDept";
-		System.out.println("Work");
 	}
 	</script>
 
 	<p></p>
 	<p></p>
 	<p></p>
-	<!-- This is the table where the results from query will be displayed
-		 We will have Java code to populate the table through a loop -->
+	<!-- This is the table where the results from query will be displayed -->
 	<div id="table1" style="margin: 100px 30%; width: 60%">
 		<table class="tg">
 			<tr>

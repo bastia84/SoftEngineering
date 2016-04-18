@@ -49,16 +49,22 @@ public class SubmitProdSearch extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
 		float hoursWorked = 0;
 		String dept = "";
+		
 		try {
-			emp = request.getParameter("Employee");
-			charge = request.getParameter("Charge");
-			startDate = request.getParameter("date1");
-			endDate = request.getParameter("date2");
-			dept = request.getParameter("selectedD");
-			String emp1, dept1, charge1;
 			
+			emps.clear(); // clear array
+			
+			emp = request.getParameter("Employee");			//get selected employee
+			charge = request.getParameter("Charge");		//get selected charge
+			startDate = request.getParameter("date1");		//get selected Start date
+			endDate = request.getParameter("date2");		//get selected end date
+			dept = request.getParameter("selectedD");		//get selected department
+			String emp1, dept1, charge1;		
+			
+			//set strings for query based on selection in dropdowns
 			if (emp.equals("All")){
 				emp1 = " LIKE '%' ";
 			}
@@ -77,26 +83,25 @@ public class SubmitProdSearch extends HttpServlet {
 			
 			else {charge1 = "='" + charge + "'";}
 			
+			//create new connection to DB, Run SQL Query and store ResultSet
 			RESULT = new dbConn().start("SELECT SUM(sngHours) AS HoursWorked, SummaryOrg, Worker FROM dbo.Productivity WHERE Worker" + emp1 + " AND SummaryOrg" + dept1 + " AND JobFunction" + charge1 + " AND Month>'" + startDate + "' AND Month<'" + endDate 	+ "' GROUP BY Worker, SummaryOrg");
 			
 			
-			//IF EMPTY WILL THROW AN ERROR
-		RESULT.next();
-		emps.clear();
+			RESULT.next(); //go to first result		
 		
-		
-		while(!RESULT.isAfterLast()){
-			hoursWorked = RESULT.getFloat("HoursWorked");
-			dept = RESULT.getString("SummaryOrg");
-			emp = RESULT.getString("Worker");
+		while(!RESULT.isAfterLast()){ //while there are still elements in result set
 			
-			Employee worker = new Employee(emp, dept , hoursWorked);
-			emps.add(worker);
+			hoursWorked = RESULT.getFloat("HoursWorked");		//get hours worked from resultset
+			dept = RESULT.getString("SummaryOrg");				//get department from resultset
+			emp = RESULT.getString("Worker");					//get employee from resultset
+			
+			Employee worker = new Employee(emp, dept , hoursWorked); //create new employee with elements from resultset
+			emps.add(worker);		//add worker to array
 			
 			RESULT.next();
 		
 		}
-		
+		//prepare elements to be sent to JSP page
 		request.setAttribute("charge", charge);
 		
 		Employee[] TableEmployee = emps.toArray(new Employee[emps.size()]);
@@ -110,7 +115,6 @@ public class SubmitProdSearch extends HttpServlet {
 		
 		request.getRequestDispatcher("Productivity.jsp").forward(request, response);
 
-		// ADDITIONAL CODE TO REPOPULATE THE DEPARTMENTS WILL NEED TO BE ADDED
 	}
 
 }
