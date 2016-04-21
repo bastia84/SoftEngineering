@@ -78,7 +78,7 @@ public class SubmitProdSearch extends HttpServlet {
 			else {dept1 = "='" + dept + "'";}
 			
 			if (charge.equals("All")){
-				charge1 = "LIKE '%' ";
+				charge1 = " LIKE '%' ";
 			}
 			
 			else {charge1 = "='" + charge + "'";}

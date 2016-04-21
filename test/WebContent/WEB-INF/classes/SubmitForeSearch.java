@@ -44,7 +44,7 @@ public class SubmitForeSearch extends HttpServlet {
 		dept = request.getParameter("selectedDept");		//get selected department
 		dateStart = request.getParameter("date1");			//get selected date start
 		dateEnd = request.getParameter("date2");			//get selected date end
-		chargeIn = request.getParameter("charge");			//get selected charge #
+		chargeIn = request.getParameter("JFunction");			//get selected charge #
 		
 		try {
 			

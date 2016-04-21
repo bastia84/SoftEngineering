@@ -43,7 +43,7 @@ public class dbConn {
 	 */
 	public ResultSet getData(String query) throws SQLException {
 		Connection CON = null;
-
+		System.out.println(query);
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // connect
 																			// to
