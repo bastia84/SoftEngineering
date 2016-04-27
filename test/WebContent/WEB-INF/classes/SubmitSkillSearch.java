@@ -108,6 +108,8 @@ public class SubmitSkillSearch extends HttpServlet {
 			
 			} catch (SQLException e) {
 				e.printStackTrace();
+				String messages = "<script>alert('Search didn't return any results')</script>";
+				request.setAttribute("messages", messages);
 			}
 			
 			request.getRequestDispatcher("Skills.jsp").forward(request, response);

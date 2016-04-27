@@ -49,21 +49,33 @@ public class SubmitProdSearch extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
+		String errMessage;
 		float hoursWorked = 0;
 		String dept = "";
 		
-		try {
+		
 			
 			emps.clear(); // clear array
 			
-			emp = request.getParameter("Employee");			//get selected employee
+			emp = request.getParameter("SelectedEmp");			//get selected employee
 			charge = request.getParameter("Charge");		//get selected charge
 			startDate = request.getParameter("date1");		//get selected Start date
 			endDate = request.getParameter("date2");		//get selected end date
-			dept = request.getParameter("selectedD");		//get selected department
+			dept = request.getParameter("selectedDept");		//get selected department
 			String emp1, dept1, charge1;		
 			
+			
+			try {
+				
+				System.out.println(endDate +" "+ startDate +" " + emp + " " + charge);
+			
+				if(emp.equals("") || charge.equals("") || dept.equals("") || startDate.equals("Start Date:") || endDate.equals("End Date:")){
+					System.out.println("Work");
+					errMessage = "<script>alert('Make sure all parameters for search are initilized')</script>";
+					request.setAttribute("errMessage", errMessage);
+				}
+			
+				
 			//set strings for query based on selection in dropdowns
 			if (emp.equals("All")){
 				emp1 = " LIKE '%' ";
@@ -99,14 +111,17 @@ public class SubmitProdSearch extends HttpServlet {
 			emps.add(worker);		//add worker to array
 			
 			RESULT.next();
+			
 		
 		}
 		//prepare elements to be sent to JSP page
 		request.setAttribute("charge", charge);
 		
+		
 		Employee[] TableEmployee = emps.toArray(new Employee[emps.size()]);
 		request.setAttribute("TableEmployee", TableEmployee);
-		
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			

@@ -47,7 +47,6 @@
 		</tr>
 	</table>
 
-	<div id="form2" class="form2" style="margin-left: 2%; margin-top: 0%">
 
 
 		<form name="d" action="LoadForeDept">
@@ -56,14 +55,22 @@
 				<tr>
 					<th>Project: <select name="Project" id="Project"
 						onchange="javascript:document.d.submit()">
+						
 							<!-- When a selection is made the Servlet "LoadForeDept" 
 								 is called to populate the Employee drop-down -->
 							<!-- This Java code loops through the array of Projects and populates the drop-down -->
 							<%
+								int k;
 								String[] Prj1 = (String[]) request.getAttribute("Projects");
 								if (Prj1 != null) {
+									if (Prj1.length > 1){
+										%>
+										<option></option>
+										<option value="All">All</option>
+									<%
+									}
 									System.out.println(Prj1.length);
-									for (int k = 0; k < Prj1.length; k++) {
+									for (k = 0; k < Prj1.length; k++) {
 							%>
 
 							<option><%=Prj1[k]%></option>
@@ -84,19 +91,25 @@
 				<tr>
 					
 					<th>Department: <select name="Department" id="Department" onchange="javascript:document.c.submit()">
-					<option></option>
+					
 							<!-- When a selection is made the Servlet "LoadForCharge" 
 								 is called to populate the Charges drop-down below-->
 							<!-- This Java code loops through the array of departments and populates the drop-down -->
 							<%
-							
+								int i;
 								String[] dept1 = (String[]) request.getAttribute("Departments");
 								if (dept1 != null) {
+									if (dept1.length > 1){
+										%>
+										<option></option>
+										<option value="All">All</option>
+									<%
+									}
 									System.out.println(dept1.length);
-									for (int k = 0; k < dept1.length; k++) {
+									for (i = 0; i < dept1.length; i++) {
 							%>
 
-							<option><%=dept1[k]%></option>
+							<option><%=dept1[i]%></option>
 							<%
 								}
 								}
@@ -108,14 +121,41 @@
 		</form>
 				
 		<form name="s" action="SubmitForeSearch">
-		
+			<input type="hidden" name="selectedProj" id="selectedProj" value="${selectedProj}">
+				<input type="hidden" name="selectedDept" id="selectedDept" value="${selectedDept}">
+				<table class="tg" id="dropdown"
+				style="float: left; width: 250px; height: 20px; margin-left: 2%; margin-top: .5%">
+				<tr>
+					<th>Charge #: <select name="JFunction" id="JFunction" >
+					
+							<!-- When a selection is made the Servlet "SubmitForeSearch" 
+								 is called to populate table below with the results from the query -->
+							<!-- This Java code loops through the array of departments and populates the drop-down -->
+							<%
+								int z;
+								String[] Charge1 = (String[]) request.getAttribute("JFunctions");
+								if (Charge1 != null) {
+									System.out.println(Charge1.length);
+									for (z = 0; z < Charge1.length; z++) {
+							%>
+
+							<option><%=Charge1[z]%></option>
+							<%
+								}
+								}
+							
+						%>
+					</select></th>
+				</tr>
+			</table>
+		<div id="form2" class="form2" style="margin-left: 2%; margin-top: 0%">
 		<input type="datetime-local" name="date1" id="date1"
 					value="Start Date:" /> <input type="datetime-local" name="date2"
 					id="date2" value="End Date:" />
 
 				<script src="http://code.jquery.com/jquery-1.11.2.js"></script>
 				<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-			
+			</div>
 			
 			
 
@@ -168,42 +208,23 @@
 		})();
 	</script>
 		
-				<input type="hidden" name="selectedProj" id="selectedProj" value="${selectedProj}">
-				<input type="hidden" name="selectedDept" id="selectedDept" value="${selectedDept}">
-				<table class="tg" id="dropdown"
-				style="float: left; width: 250px; height: 20px; margin-left: 2%; margin-top: .5%">
-				<tr>
-					<th>Charge #: <select name="JFunction" id="JFunction" onchange="javascript:document.s.submit()">
-					<option></option>
-							<!-- When a selection is made the Servlet "SubmitForeSearch" 
-								 is called to populate table below with the results from the query -->
-							<!-- This Java code loops through the array of departments and populates the drop-down -->
-							<%
-							
-								String[] Charge1 = (String[]) request.getAttribute("JFunctions");
-								if (Charge1 != null) {
-									System.out.println(Charge1.length);
-									for (int k = 0; k < Charge1.length; k++) {
-							%>
+			
 
-							<option><%=Charge1[k]%></option>
-							<%
-								}
-								}
-							
-						%>
-					</select></th>
-				</tr>
-			</table>
 
-</form>
-</div>
 
 				
 	
 	<div style="width: 400px">
+		<div style="float: right; width: 130px; align: center">
 			<button type="button" value="New Search" id=NewSearch class="Loginbutton" onclick="redirect()">New Search</button>
+		</div>
+		<div style="float: right; width: 225px; align: center">
+			<input type="submit" value="Submit Search" id=Search>
+		</div>
 	</div>
+	
+	</form>
+		
 	
 	<script>
 	function redirect(){
@@ -233,16 +254,16 @@
 							String[] time = (String []) request.getAttribute("resulttimes");
 							if (Depts != null) {
 
-								for (int z = 0; z < Depts.length; z++) {
+								for (int m = 0; m < Depts.length; m++) {
 									
-									if(z%2 == 0){
+									if(m%2 == 0){
 						%>
 			<tr>
-				<td class="tg-6k2t"><%=Projs[z]%></td>
-				<td class="tg-6k2t"><%=Depts[z]%></td>
-				<td class="tg-6k2t"><%=Chargs[z]%></td>
-				<td class="tg-6k2t"><%=hrs[z]%></td>
-				<td class="tg-6k2t"><%=time[z]%></td>
+				<td class="tg-6k2t"><%=Projs[m]%></td>
+				<td class="tg-6k2t"><%=Depts[m]%></td>
+				<td class="tg-6k2t"><%=Chargs[m]%></td>
+				<td class="tg-6k2t"><%=hrs[m]%></td>
+				<td class="tg-6k2t"><%=time[m]%></td>
 			</tr>
 			<%
 							}
@@ -250,11 +271,11 @@
 										%>
 
 			<tr>
-				<td class="tg-yw4l"><%=Projs[z]%></td>
-				<td class="tg-yw4l"><%=Depts[z]%></td>
-				<td class="tg-yw4l"><%=Chargs[z]%></td>
-				<td class="tg-yw4l"><%=hrs[z]%></td>
-				<td class="tg-6k2t"><%=time[z]%></td>
+				<td class="tg-yw4l"><%=Projs[m]%></td>
+				<td class="tg-yw4l"><%=Depts[m]%></td>
+				<td class="tg-yw4l"><%=Chargs[m]%></td>
+				<td class="tg-yw4l"><%=hrs[m]%></td>
+				<td class="tg-6k2t"><%=time[m]%></td>
 				
 			</tr>
 

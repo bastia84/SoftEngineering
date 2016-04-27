@@ -37,7 +37,8 @@ public class LoadForeDept extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
 		proj = request.getParameter("Project"); 	//get selected project
-
+		ArrayList<String> p = new ArrayList<String>();
+		p.add(proj);
 		try {
 			Department.clear(); // clear array
 			
@@ -59,13 +60,20 @@ public class LoadForeDept extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		
+		String[] Projects = p.toArray(new String[p.size()]);
+		
+		System.out.println("array length" + Projects.length);
+		request.setAttribute("Projects", Projects);
+		
+		
 		//prepare elements to be sent to JSP page
 		String selectedProj = proj;
 		request.setAttribute("selectedProj", selectedProj);
 		String[] Departments = Department.toArray(new String[Department.size()]);
 		request.setAttribute("Departments", Departments);
 		
-		request.getRequestDispatcher("/Forecasting.jsp").forward(request, response);
+		request.getRequestDispatcher("Forecasting.jsp").forward(request, response);
 	}
 
 	/**

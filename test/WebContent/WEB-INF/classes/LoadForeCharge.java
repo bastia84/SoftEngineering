@@ -66,6 +66,16 @@ public class LoadForeCharge extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		ArrayList<String> p = new ArrayList<String>();
+		p.add(proj);
+		String[] Projects = p.toArray(new String[p.size()]);
+		request.setAttribute("Projects", Projects);
+		
+		ArrayList<String> d = new ArrayList<String>();
+		d.add(dept);
+		String[] Departments = d.toArray(new String[d.size()]);
+		request.setAttribute("Departments", Departments);
+		
 		//prepare elements to be sent to JSP page
 		String selectedProj = proj;
 		request.setAttribute("selectedProj", selectedProj);
