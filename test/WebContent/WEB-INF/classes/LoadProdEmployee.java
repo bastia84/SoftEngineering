@@ -88,7 +88,7 @@ public class LoadProdEmployee extends HttpServlet {
 		request.setAttribute("Employees", Employees); // Set Employee array on
 		  // webpage
 		String selectedDept = dept;
-		request.setAttribute("selectedD", selectedDept);
+		request.setAttribute("selectedDept", selectedDept);
 		
 		
 		request.getRequestDispatcher("Productivity.jsp").forward(request,

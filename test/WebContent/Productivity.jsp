@@ -99,26 +99,26 @@
 				<tr>
 					<th style="padding-left: 2px">Employee:<select id="Employee"
 						name="Employee" onchange="javascript:document.e.submit()">
-<option></option>
 
 							<!-- This Java code loops through the array of employees and populates the drop-down -->
 							<%
 							int i;
 							String[] Emp1 = (String[]) request.getAttribute("Employees");
 							if (Emp1 != null) {
+								if (Emp1.length > 1){
+									%>
+									<option></option>
+									<option value="All">All</option>
+								<%
+								}
 								System.out.println(Emp1.length);
 								for (i = 0; i < Emp1.length; i++) {
+									
 						%>
 
 							<option><%=Emp1[i]%></option>
 							<%
 							}
-								//if more than one element is present in Array add an "All" Option
-								if(i > 1){
-									%>
-							<option value="All">All</option>
-							<%	
-								}
 							}
 						%>
 
@@ -138,14 +138,21 @@
 				class="tg" id="dropdown">
 				<tr>
 					<th>Charge #: <select id="Charge" name="Charge">
-					<option></option>
 							<option value="All">All</option>
 							<!-- This Java code loops through the array of Charges and populates the drop-down -->
 							<%
+							int j;
 							String[] Cha1 = (String[]) request.getAttribute("Charges");
 							if (Cha1 != null) {
+								if (Cha1.length > 1){
+									%>
+									<option></option>
+									<option value="All">All</option>
+								<%
+								}
 								System.out.println(Cha1.length);
-								for (int j = 0; j < Cha1.length; j++) {
+								for (j = 0; j < Cha1.length; j++) {
+									
 						%>
 
 							<option><%=Cha1[j]%></option>

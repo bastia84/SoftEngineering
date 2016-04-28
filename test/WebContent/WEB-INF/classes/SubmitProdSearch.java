@@ -57,7 +57,7 @@ public class SubmitProdSearch extends HttpServlet {
 			
 			emps.clear(); // clear array
 			
-			emp = request.getParameter("SelectedEmp");			//get selected employee
+			emp = request.getParameter("selectedEmp");			//get selected employee
 			charge = request.getParameter("Charge");		//get selected charge
 			startDate = request.getParameter("date1");		//get selected Start date
 			endDate = request.getParameter("date2");		//get selected end date

@@ -37,10 +37,10 @@ public class LoadProdCharge extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		emp = request.getParameter("Employee"); // Get the
-		// project
+		// employee
 		// selected on
 		// webpage
-		dept = request.getParameter("SelectedDept");
+		dept = request.getParameter("selectedDept");
 		
 		System.out.println(emp +" " + dept);
 		
@@ -85,9 +85,9 @@ try {
 			e.printStackTrace();
 		}
 		
-		ArrayList<String> p = new ArrayList<String>();
-		p.add(emp);
-		String[] Employees = p.toArray(new String[p.size()]);
+		ArrayList<String> e = new ArrayList<String>();
+		e.add(emp);
+		String[] Employees = e.toArray(new String[e.size()]);
 		request.setAttribute("Employees", Employees);
 		
 		ArrayList<String> d = new ArrayList<String>();
@@ -98,12 +98,14 @@ try {
 		//prepare elements to be sent to JSP page
 		String selectedEmp = emp;
 		request.setAttribute("selectedEmp", selectedEmp);
+		
 		String selectedDept = dept;
 		request.setAttribute("selectedDept", selectedDept);
-		String[] JFunctions = JFunction.toArray(new String[JFunction.size()]);
-		request.setAttribute("JFunctions", JFunctions);
 		
-		request.getRequestDispatcher("/Forecasting.jsp").forward(request, response);
+		String[] Charges = JFunction.toArray(new String[JFunction.size()]);
+		request.setAttribute("Charges", Charges);
+		
+		request.getRequestDispatcher("/Productivity.jsp").forward(request, response);
 
 	}
 
