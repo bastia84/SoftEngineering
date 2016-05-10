@@ -28,25 +28,23 @@ public class LoadProdDept extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * 
-	 *      Additions to method stub include: Gathering of all Departments from
-	 *      Database
+	 *      Additions to method stub include: Gathering of all Departments from Database
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-			
-			Depts.clear(); //clear all arrays
-			
-			//create connection to DB, Run SQL Query and get ResultSet
+
+			Depts.clear(); // clear all arrays
+
+			// create connection to DB, Run SQL Query and get ResultSet
 			RESULT = new dbConn().start(
-					"SELECT DISTINCT SummaryOrg FROM dbo.Productivity ORDER BY SummaryOrg"); 
-			
-			RESULT.next(); //go to first result
-			
+					"SELECT DISTINCT SummaryOrg FROM dbo.Productivity "
+							+ "ORDER BY SummaryOrg");
+
+			RESULT.next(); // go to first result
 
 			while (!RESULT.isAfterLast()) { // while there are still Departments in ResultSet
 
@@ -54,20 +52,18 @@ public class LoadProdDept extends HttpServlet {
 				RESULT.next();
 			}
 
+			// prepare elements to be sent to JSP page
+			request.setAttribute("Departments", Depts.toArray(new String[Depts.size()]));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		//prepare elements to be sent to JSP page
-		String[] Departments = Depts.toArray(new String[Depts.size()]); 
-		request.setAttribute("Departments", Departments);
-		
-		request.getRequestDispatcher("Productivity.jsp").forward(request,response);
+		request.getRequestDispatcher("Productivity.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

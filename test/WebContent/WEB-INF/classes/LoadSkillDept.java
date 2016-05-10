@@ -28,52 +28,34 @@ public class LoadSkillDept extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * 
-	 *      Additions to method stub include: Gathering of all Departments from
-	 *      Database
+	 *      Additions to method stub include: Gathering of all Departments from Database
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
 
 			RESULT = new dbConn().start(
-					"SELECT DISTINCT SummaryOrg FROM dbo.Productivity ORDER BY SummaryOrg"); // Run
-																								// Query
-																								// to
-																								// get
-																								// all
-																								// departments
-																								// in
-																								// Database
+					"SELECT DISTINCT SummaryOrg FROM dbo.Productivity ORDER BY SummaryOrg"); // Run Query to get all departments in Database
 			RESULT.next();
 			Depts.clear();
-			while (!RESULT.isAfterLast()) { // while there are still Departments
-											// in ResultSet
+			while (!RESULT.isAfterLast()) { // while there are still Departments in ResultSet
 
-				Depts.add(RESULT.getString("SummaryOrg")); // Add the department
-															// to the Department
-															// array
+				Depts.add(RESULT.getString("SummaryOrg")); // Add the department to the Department array
 				RESULT.next();
 			}
+			request.setAttribute("Departments", Depts.toArray(new String[Depts.size()])); // set Departments array on webpage
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		String[] Departments = Depts.toArray(new String[Depts.size()]); // change
-																		// arrayList
-																		// into
-																		// Array
-
-		request.setAttribute("Departments", Departments); // set Departments
-															// array on webpage
 		request.getRequestDispatcher("/Skills.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

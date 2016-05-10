@@ -19,8 +19,7 @@ public class LoadForeCharge extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static ResultSet RESULT;
 	public ArrayList<String> JFunction = new ArrayList<String>();
-	public String proj;
-	public String dept;
+	public String proj, dept, errMessage, proj1, dept1;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -31,65 +30,74 @@ public class LoadForeCharge extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		proj = request.getParameter("selectedProj"); // Get the
-		// project
-		// selected on
-		// webpage
-		dept = request.getParameter("Department");
-		
-		System.out.println(proj +" " + dept);
-		
+		proj = request.getParameter("selectedProj"); // Get the project selected on webpage
+		dept = request.getParameter("Department"); // Get the department selected on webpage
+
 		try {
+
+			if (proj.equals("") || dept.equals("")) {
+				errMessage = "<script>alert('Make sure all parameters for search are initilized')</script>";
+				request.setAttribute("errMessage", errMessage);
+			}
+			else {
 			
-			JFunction.clear(); //clear array
+			if (proj.equals("All")) {
+				proj1 = " LIKE '%' ";
+			}
+
+			else {
+				proj1 = "='" + proj + "'";
+			}
+
+			if (dept.equals("All")) {
+				dept1 = " LIKE '%' ";
+			}
+
+			else {
+				dept1 = "='" + dept + "'";
+			}
 			
-			//create new connection to DB, Run SQL Query and store ResultSet
-			RESULT = new dbConn().start("SELECT DISTINCT JobFunction FROM dbo.Forecasting WHERE Project ='"	+ proj + "' AND SummaryOrg='" + dept + "' ORDER BY JobFunction");
-				
+			JFunction.clear(); // clear array
+
+			// create new connection to DB, Run SQL Query and store ResultSet
+			RESULT = new dbConn().start("SELECT DISTINCT JobFunction FROM dbo.Forecasting "
+					+ "WHERE Project " + proj1
+					+ " AND SummaryOrg" + dept1
+					+ " ORDER BY JobFunction");
+
 			RESULT.next(); // Go to first project
-			
-			
+
 			while (!RESULT.isAfterLast()) { // While there are still elements in ResultSet
-				
-				System.out.println(RESULT.getString("JobFunction"));
+
 				JFunction.add(RESULT.getString("JobFunction")); // Add the charge # to the charge array
-				
 				RESULT.next();
 			}
-			RESULT.close();
+
+			ArrayList<String> p = new ArrayList<String>();
+			p.add(proj);
+
+			ArrayList<String> d = new ArrayList<String>();
+			d.add(dept);
+
+			// prepare elements to be sent to JSP page
+			request.setAttribute("Projects", p.toArray(new String[p.size()]));
+			request.setAttribute("Departments", d.toArray(new String[d.size()]));
+			request.setAttribute("JFunctions", JFunction.toArray(new String[JFunction.size()]));
+			request.setAttribute("selectedProj", proj);
+			request.setAttribute("selectedDept", dept);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		ArrayList<String> p = new ArrayList<String>();
-		p.add(proj);
-		String[] Projects = p.toArray(new String[p.size()]);
-		request.setAttribute("Projects", Projects);
-		
-		ArrayList<String> d = new ArrayList<String>();
-		d.add(dept);
-		String[] Departments = d.toArray(new String[d.size()]);
-		request.setAttribute("Departments", Departments);
-		
-		//prepare elements to be sent to JSP page
-		String selectedProj = proj;
-		request.setAttribute("selectedProj", selectedProj);
-		String selectedDept = dept;
-		request.setAttribute("selectedDept", selectedDept);
-		String[] JFunctions = JFunction.toArray(new String[JFunction.size()]);
-		request.setAttribute("JFunctions", JFunctions);
-		
 		request.getRequestDispatcher("/Forecasting.jsp").forward(request, response);
-
 	}
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

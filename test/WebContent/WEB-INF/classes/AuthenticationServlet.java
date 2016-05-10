@@ -23,8 +23,7 @@ public class AuthenticationServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -33,12 +32,9 @@ public class AuthenticationServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * 
-	 *      Additions to method stub include: Validation of credentials from Log
-	 *      In page. If Log In successful redirect to Skills webpage load
-	 *      servlet
+	 *      Additions to method stub include: Validation of credentials from Log In page. If Log In successful redirect to Skills webpage load servlet
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -56,30 +52,16 @@ public class AuthenticationServlet extends HttpServlet {
 			if (RESULT.next()) { // If ResultSet has a value keep going
 				String user = RESULT.getString("UName"); // Get the username
 															// from ResultSet
-				
-				if (user.equals(request.getParameter("Username"))) { // If the
-																		// username
-																		// from
-																		// the
-																		// ResultSet
-																		// and
-																		// the
-																		// username
-																		// from
-																		// the
-																		// input
-																		// field
-																		// are
-																		// the
-																		// same
-																		// redirect
+
+				if (user.equals(request.getParameter("Username"))) { // If the username from the ResultSet 
+																		// and the username from the input field are the then redirect
 					response.sendRedirect(
 							"http://localhost:8080/test/LoadSkillDept");
 				}
 			} else { // Else display error message
 				messages = "<script>alert('Invalid Username/Password')</script>";
 				request.setAttribute("messages", messages);
-				request.getRequestDispatcher("/MyJsp.jsp").forward(request,
+				request.getRequestDispatcher("/RPTM.jsp").forward(request,
 						response);
 			}
 

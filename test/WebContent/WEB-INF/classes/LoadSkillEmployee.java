@@ -13,8 +13,8 @@ import test.dbConn;
 /**
  * Servlet implementation class LoadEmployee
  */
-@WebServlet("/LoadEmployee")
-public class LoadEmployee extends HttpServlet {
+@WebServlet("/LoadSkillEmployee")
+public class LoadSkillEmployee extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static ResultSet RESULT;
 	public ArrayList<String> Employee = new ArrayList<String>();
@@ -24,7 +24,7 @@ public class LoadEmployee extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LoadEmployee() {
+	public LoadSkillEmployee() {
 		super();
 	}
 
@@ -73,23 +73,28 @@ public class LoadEmployee extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		ArrayList<String> e = new ArrayList<String>();
-		e.add(dept);
-		String[] Departments = e.toArray(new String[e.size()]);
-		request.setAttribute("Departments", Departments);
-		String[] Employees = Employee.toArray(new String[Employee.size()]); // change
-																			// arrayList
-																			// into
-																			// Array
-		String selectedD = dept;
-		request.setAttribute("selectedD", selectedD);
-		request.setAttribute("Employees", Employees); // Set Employee array on
-														// webpage
+		
+		request.setAttribute("Departments", createArray(dept));
+		request.setAttribute("selectedD", dept);
+		request.setAttribute("Employees", Employee.toArray(new String[Employee.size()]));
+														
 		request.getRequestDispatcher("/Skills.jsp").forward(request, response);
 
-		// ADDITIONAL CODE TO REPOPULATE THE DEPARTMENTS WILL NEED TO BE ADDED
 	}
 
+	/**
+	 * This method creates an Array of String containing only one String
+	 * 
+	 * @param toAdd The string to be added to the Array of String
+	 * @return		The Array of String
+	 */
+	public String[] createArray(String toAdd){
+		ArrayList<String> List = new ArrayList<String>();
+		List.add(toAdd);		
+		String[] createdArray = List.toArray(new String[List.size()]);
+		return createdArray;
+ 	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)

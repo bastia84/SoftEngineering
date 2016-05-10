@@ -31,9 +31,13 @@
 	</form>
 
 	<!-- Button to manage authentications (INACTIVE) -->
-	<button id=MA disabled
-		style="position: absolute; right: 2px; bottom: 2px;">Manage
+	<button id=MA onclick="openWin()" style="position: absolute; right: 2px; bottom: 2px;">Manage
 		Authentication</button>
 </body>
+<script>
+function openWin() {
+    window.open("http://localhost:8080/test/ManageAuthPage.jsp","","width=100,height=400,top=350,left=1000,status=no,resizable=no");
+}
+</script>
 </html>
 <!-- END OF FILE -->
